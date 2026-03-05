@@ -34,6 +34,14 @@ const DEMO_USER: AuthUser = {
     role: 'artisan',
 };
 
+// In-memory auth state for demo mode
+let mockDemoUser: AuthUser | null = null;
+const demoAuthListeners = new Set<(user: AuthUser | null) => void>();
+
+function notifyDemoListeners() {
+    demoAuthListeners.forEach((listener) => listener(mockDemoUser));
+}
+
 // --- Helper: Convert Firebase User → AuthUser ---
 function mapFirebaseUser(user: User): AuthUser {
     return {
@@ -53,7 +61,10 @@ export async function signUpWithEmail(
 ): Promise<AuthUser> {
     if (isDemoMode) {
         console.log('[Demo] Sign up:', { email, displayName, role });
-        return { ...DEMO_USER, email, displayName, role };
+        const newUser = { ...DEMO_USER, email, displayName, role };
+        mockDemoUser = newUser;
+        notifyDemoListeners();
+        return newUser;
     }
 
     const credential: UserCredential = await createUserWithEmailAndPassword(auth!, email, password);
@@ -75,6 +86,8 @@ export async function signInWithEmail(
 ): Promise<AuthUser> {
     if (isDemoMode) {
         console.log('[Demo] Sign in:', email);
+        mockDemoUser = DEMO_USER;
+        notifyDemoListeners();
         return DEMO_USER;
     }
 
@@ -86,6 +99,8 @@ export async function signInWithEmail(
 export async function signInWithGoogle(): Promise<AuthUser> {
     if (isDemoMode) {
         console.log('[Demo] Google sign in');
+        mockDemoUser = DEMO_USER;
+        notifyDemoListeners();
         return DEMO_USER;
     }
 
@@ -113,6 +128,8 @@ export async function signInWithGoogle(): Promise<AuthUser> {
 export async function logOut(): Promise<void> {
     if (isDemoMode) {
         console.log('[Demo] Signed out');
+        mockDemoUser = null;
+        notifyDemoListeners();
         return;
     }
     await signOut(auth!);
@@ -121,9 +138,10 @@ export async function logOut(): Promise<void> {
 // --- Auth State Listener ---
 export function onAuthChange(callback: (user: AuthUser | null) => void): () => void {
     if (isDemoMode) {
-        // In demo mode, simulate logged-in artisan
-        setTimeout(() => callback(DEMO_USER), 100);
-        return () => { };
+        demoAuthListeners.add(callback);
+        // Dispatch immediately the current state
+        setTimeout(() => callback(mockDemoUser), 0);
+        return () => demoAuthListeners.delete(callback);
     }
 
     return onAuthStateChanged(auth!, (firebaseUser) => {
@@ -133,7 +151,7 @@ export function onAuthChange(callback: (user: AuthUser | null) => void): () => v
 
 // --- Get Current User ---
 export function getCurrentUser(): AuthUser | null {
-    if (isDemoMode) return DEMO_USER;
+    if (isDemoMode) return mockDemoUser;
     const user = auth?.currentUser;
     return user ? mapFirebaseUser(user) : null;
 }
