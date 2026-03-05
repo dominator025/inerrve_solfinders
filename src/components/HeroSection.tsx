@@ -110,65 +110,49 @@ export default function HeroSection() {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.3 }}
-                        className="relative hidden lg:block"
+                        className="relative hidden lg:block lg:ml-8 mt-4"
                     >
-                        <div className="relative w-full h-[550px]">
-                            {/* Main image */}
-                            <motion.div
-                                className="absolute top-0 right-0 w-80 h-96 rounded-3xl overflow-hidden shadow-2xl"
-                                whileHover={{ y: -5, scale: 1.02 }}
-                                transition={{ type: 'spring', stiffness: 300 }}
-                            >
-                                <img
-                                    src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&h=700&fit=crop"
-                                    alt="Indian pottery artisan"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-earth-brown/40 to-transparent" />
-                            </motion.div>
+                        <div className="relative w-full h-[600px] flex items-center justify-center gap-8">
+                            {/* Decorative element inside collage */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-terracotta/5 to-saffron/5 rounded-full blur-3xl -z-10" />
 
-                            {/* Secondary image */}
-                            <motion.div
-                                className="absolute bottom-0 left-0 w-64 h-72 rounded-3xl overflow-hidden shadow-2xl"
-                                whileHover={{ y: -5, scale: 1.02 }}
-                                transition={{ type: 'spring', stiffness: 300 }}
-                            >
-                                <img
-                                    src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=500&h=500&fit=crop"
-                                    alt="Handloom weaving"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-earth-brown/40 to-transparent" />
-                            </motion.div>
+                            {/* Left Image Component */}
+                            <div className="relative -mt-32">
+                                <motion.div
+                                    className="w-[260px] h-[360px] rounded-3xl overflow-hidden shadow-xl border-[6px] border-white z-10"
+                                    whileHover={{ y: -5, scale: 1.02 }}
+                                    transition={{ type: 'spring', stiffness: 300 }}
+                                    initial={{ y: 0 }}
+                                >
+                                    <img
+                                        src="/hero-left-image.jpg"
+                                        alt="Artisans making pottery"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent transition-opacity hover:opacity-75" />
+                                </motion.div>
 
-                            {/* Floating badge */}
-                            <motion.div
-                                className="absolute top-8 left-8 bg-white rounded-2xl shadow-xl p-4"
-                                animate={{ y: [0, -10, 0] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-saffron to-terracotta flex items-center justify-center">
-                                        <Sparkles className="w-6 h-6 text-white" />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-semibold text-earth-brown">AI Story Generated</p>
-                                        <p className="text-xs text-earth-brown/50">Just now</p>
-                                    </div>
-                                </div>
-                            </motion.div>
+                                {/* Floating badge 1 has been removed as per user request */}
+                            </div>
 
-                            {/* Floating stats badge */}
-                            <motion.div
-                                className="absolute bottom-16 right-6 bg-white rounded-2xl shadow-xl p-4"
-                                animate={{ y: [0, 10, 0] }}
-                                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-                            >
-                                <div className="text-center">
-                                    <p className="text-2xl font-bold text-terracotta">4.9★</p>
-                                    <p className="text-xs text-earth-brown/50">Avg Rating</p>
-                                </div>
-                            </motion.div>
+                            {/* Right Image Component */}
+                            <div className="relative mt-8 z-20">
+                                <motion.div
+                                    className="w-[280px] h-[380px] rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white"
+                                    whileHover={{ y: -5, scale: 1.02 }}
+                                    transition={{ type: 'spring', stiffness: 300 }}
+                                    initial={{ y: 0 }}
+                                >
+                                    <img
+                                        src="/hero-right-image.png"
+                                        alt="Artisans collage"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent transition-opacity hover:opacity-75" />
+                                </motion.div>
+
+                                {/* Floating stats badge 2 has been removed as per user request */}
+                            </div>
                         </div>
                     </motion.div>
                 </div>
