@@ -34,6 +34,15 @@ const DEMO_USER: AuthUser = {
     role: 'artisan',
 };
 
+// Mock buyer for demo Google login
+const DEMO_BUYER_USER: AuthUser = {
+    uid: 'demo-buyer-001',
+    email: 'explorer@example.com',
+    displayName: 'Demo User',
+    photoURL: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop&crop=face',
+    role: 'buyer',
+};
+
 // In-memory auth state for demo mode
 let mockDemoUser: AuthUser | null = null;
 const demoAuthListeners = new Set<(user: AuthUser | null) => void>();
@@ -99,9 +108,9 @@ export async function signInWithEmail(
 export async function signInWithGoogle(): Promise<AuthUser> {
     if (isDemoMode) {
         console.log('[Demo] Google sign in');
-        mockDemoUser = DEMO_USER;
+        mockDemoUser = DEMO_BUYER_USER;
         notifyDemoListeners();
-        return DEMO_USER;
+        return DEMO_BUYER_USER;
     }
 
     const provider = new GoogleAuthProvider();
