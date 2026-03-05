@@ -40,14 +40,9 @@ export default function Navbar() {
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-terracotta to-saffron flex items-center justify-center shadow-lg group-hover:shadow-terracotta/30 transition-shadow">
                             <Sparkles className="w-5 h-5 text-white" />
                         </div>
-                        <div className="flex flex-col">
-                            <span className="font-heading text-xl font-bold text-earth-brown leading-tight">
-                                CraftConnect
-                            </span>
-                            <span className="text-[10px] font-semibold text-terracotta tracking-widest uppercase">
-                                AI Powered
-                            </span>
-                        </div>
+                        <span className="font-heading text-xl font-bold text-earth-brown leading-tight">
+                            CraftConnect
+                        </span>
                     </Link>
 
                     {/* Desktop Nav */}

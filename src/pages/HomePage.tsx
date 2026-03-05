@@ -6,6 +6,7 @@ import ArtisanCard from '../components/ArtisanCard';
 import ProductCard from '../components/ProductCard';
 import AIToolCard from '../components/AIToolCard';
 import CraftMapIndia from '../components/CraftMapIndia';
+import AboutSection from '../components/AboutSection';
 import { mockArtisans, mockProducts, mockCulturalStories } from '../utils/mockData';
 import { HOW_IT_WORKS_STEPS } from '../utils/constants';
 
@@ -235,6 +236,9 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            {/* About Section */}
+            <AboutSection />
 
             {/* Craft Map of India */}
             <CraftMapIndia />

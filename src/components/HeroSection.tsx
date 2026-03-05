@@ -51,16 +51,18 @@ export default function HeroSection() {
                             transition={{ delay: 0.2 }}
                             className="inline-flex items-center gap-2 px-4 py-2 bg-terracotta/10 rounded-full mb-6"
                         >
-                            <Sparkles className="w-4 h-4 text-terracotta" />
-                            <span className="text-sm font-medium text-terracotta">AI-Powered Artisan Platform</span>
+                            <span className="text-sm font-medium text-terracotta">✨ Every craft has a soul. We bring it online. 🌍</span>
                         </motion.div>
 
                         <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-earth-brown leading-[1.1] mb-6">
                             Empowering{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-terracotta to-saffron">
                                 India's Artisans
-                            </span>{' '}
-                            Through AI
+                            </span>
+                            <br />
+                            <span className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-earth-brown/70">
+                                An Initiative by SolFinders
+                            </span>
                         </h1>
 
                         <p className="text-lg text-earth-brown/70 leading-relaxed mb-8 max-w-lg">
