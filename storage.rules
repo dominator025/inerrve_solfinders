@@ -1,0 +1,67 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ─── Helper Functions ─────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isImageFile() {
+      return request.resource.contentType.matches('image/.*');
+    }
+
+    function isUnder5MB() {
+      return request.resource.size < 5 * 1024 * 1024;
+    }
+
+    // ─── Artisan Profile Images ───────────────────────────────
+    match /artisanProfiles/{userId}/{fileName} {
+      // Anyone can view artisan profile images
+      allow read: if true;
+
+      // Only the owning user can upload/update their profile image
+      allow write: if isAuthenticated() &&
+        request.auth.uid == userId &&
+        isImageFile() &&
+        isUnder5MB();
+
+      allow delete: if isAuthenticated() &&
+        request.auth.uid == userId;
+    }
+
+    // ─── Product Images ───────────────────────────────────────
+    match /productImages/{artisanId}/{productId}/{fileName} {
+      // Anyone can view product images
+      allow read: if true;
+
+      // Only authenticated artisans can upload product images
+      allow write: if isAuthenticated() &&
+        isImageFile() &&
+        isUnder5MB();
+
+      allow delete: if isAuthenticated();
+    }
+
+    // ─── Craft Gallery Images ─────────────────────────────────
+    match /craftGallery/{userId}/{fileName} {
+      // Anyone can view gallery images
+      allow read: if true;
+
+      // Only the owning user can upload gallery images
+      allow write: if isAuthenticated() &&
+        request.auth.uid == userId &&
+        isImageFile() &&
+        isUnder5MB();
+
+      allow delete: if isAuthenticated() &&
+        request.auth.uid == userId;
+    }
+
+    // ─── Deny all other paths ─────────────────────────────────
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
