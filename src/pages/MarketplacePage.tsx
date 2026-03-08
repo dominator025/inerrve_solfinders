@@ -81,7 +81,13 @@ export default function MarketplacePage() {
     }, [products, selectedCategory, searchQuery, sortBy]);
 
     return (
-        <div className="min-h-screen bg-cream pt-24 pb-16">
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="min-h-screen bg-cream pt-24 pb-16"
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <motion.div
@@ -168,6 +174,6 @@ export default function MarketplacePage() {
                     </>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 }

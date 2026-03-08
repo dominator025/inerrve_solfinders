@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { useState } from 'react';
 import type { Product } from '../services/firestore';
 
 interface ProductCardProps {
@@ -9,9 +10,13 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
+    const [imageError, setImageError] = useState(false);
+    
     const discount = product.originalPrice
         ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
         : 0;
+
+    const placeholderImage = 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&h=600&fit=crop&q=80';
 
     return (
         <motion.div
@@ -25,10 +30,11 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 className="group block bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-warm-beige/50"
             >
                 {/* Image */}
-                <div className="relative aspect-square overflow-hidden">
+                <div className="relative aspect-square overflow-hidden bg-warm-beige/10">
                     <img
-                        src={product.images[0]}
+                        src={imageError ? placeholderImage : product.images[0]}
                         alt={product.name}
+                        onError={() => setImageError(true)}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-earth-brown/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

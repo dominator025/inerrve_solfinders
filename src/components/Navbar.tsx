@@ -5,12 +5,17 @@ import { Menu, X, Sparkles, ShoppingBag, User, LayoutDashboard, LogOut } from 'l
 import type { LucideIcon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { logOut } from '../services/auth';
+import VoiceButton from './VoiceButton';
 
 type NavLinkItem = { path: string; label: string; icon?: LucideIcon };
 
 const defaultNavLinks: NavLinkItem[] = [
     { path: '/', label: 'Home' },
     { path: '/marketplace', label: 'Marketplace' },
+    { path: '/artisans', label: 'Artisans' },
+    { path: '/skill-growth', label: 'Skill Hub' },
+    { path: '/about', label: 'About' },
+    { path: '/contact', label: 'Contact' },
 ];
 
 const authNavLinks: NavLinkItem[] = [
@@ -75,6 +80,7 @@ export default function Navbar() {
 
                     {/* Desktop Actions */}
                     <div className="hidden lg:flex items-center gap-3">
+                        <VoiceButton />
                         <Link
                             to="/marketplace"
                             className="p-2.5 rounded-xl text-earth-brown/60 hover:text-earth-brown hover:bg-warm-beige/50 transition-all"

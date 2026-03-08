@@ -6,7 +6,7 @@ import ArtisanCard from '../components/ArtisanCard';
 import ProductCard from '../components/ProductCard';
 import AIToolCard from '../components/AIToolCard';
 import CraftMapIndia from '../components/CraftMapIndia';
-import AboutSection from '../components/AboutSection';
+import VoiceButton from '../components/VoiceButton';
 import { mockArtisans, mockProducts, mockCulturalStories } from '../utils/mockData';
 import { HOW_IT_WORKS_STEPS } from '../utils/constants';
 
@@ -14,11 +14,16 @@ export default function HomePage() {
     const featuredProducts = mockProducts.filter((p) => p.featured);
 
     return (
-        <div>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+        >
             <HeroSection />
 
             {/* Featured Artisans */}
-            <section className="py-16 lg:py-24 bg-cream">
+            <section id="artisans-section" className="py-16 lg:py-24 bg-cream">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -37,17 +42,20 @@ export default function HomePage() {
                                 Discover the talented craftspeople keeping India's traditions alive through their extraordinary skills.
                             </p>
                         </div>
-                        <Link
-                            to="/marketplace"
-                            className="flex items-center gap-2 text-terracotta font-medium mt-4 md:mt-0 hover:gap-3 transition-all"
-                        >
-                            View All
-                            <ArrowRight className="w-4 h-4" />
-                        </Link>
+                        <div className="flex items-center gap-4 mt-4 md:mt-0">
+                            <VoiceButton />
+                            <Link
+                                to="/artisans"
+                                className="flex items-center gap-2 text-terracotta font-medium hover:gap-3 transition-all"
+                            >
+                                Meet All Artisans
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {mockArtisans.slice(0, 6).map((artisan, i) => (
+                        {mockArtisans.slice(0, 3).map((artisan, i) => (
                             <ArtisanCard key={artisan.id} artisan={artisan} index={i} />
                         ))}
                     </div>
@@ -55,7 +63,7 @@ export default function HomePage() {
             </section>
 
             {/* Trending Products */}
-            <section className="py-16 lg:py-24 bg-warm-beige/30">
+            <section id="products-section" className="py-16 lg:py-24 bg-warm-beige/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -69,9 +77,16 @@ export default function HomePage() {
                         <h2 className="font-heading text-3xl md:text-4xl font-bold text-earth-brown mb-3">
                             Popular Handmade Crafts
                         </h2>
-                        <p className="text-earth-brown/60 max-w-2xl mx-auto">
+                        <p className="text-earth-brown/60 max-w-2xl mx-auto mb-8">
                             Explore our most-loved handcrafted products, each telling a unique story of Indian heritage.
                         </p>
+                        <Link
+                            to="/marketplace"
+                            className="inline-flex items-center gap-2 px-6 py-2.5 bg-terracotta text-white rounded-xl font-medium hover:bg-terracotta-dark transition-all shadow-md"
+                        >
+                            Explore Marketplace
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
                     </motion.div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -83,7 +98,7 @@ export default function HomePage() {
             </section>
 
             {/* How It Works */}
-            <section className="py-16 lg:py-24 bg-cream">
+            <section id="steps-section" className="py-16 lg:py-24 bg-cream">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -127,7 +142,7 @@ export default function HomePage() {
             </section>
 
             {/* AI Tools Section */}
-            <section className="py-16 lg:py-24 bg-gradient-to-br from-earth-brown to-earth-brown-dark text-white relative overflow-hidden">
+            <section id="ai-tools-section" className="py-16 lg:py-24 bg-gradient-to-br from-earth-brown to-earth-brown-dark text-white relative overflow-hidden">
                 <div className="absolute inset-0">
                     <div className="absolute top-0 left-0 w-96 h-96 bg-terracotta/10 rounded-full blur-3xl" />
                     <div className="absolute bottom-0 right-0 w-96 h-96 bg-saffron/10 rounded-full blur-3xl" />
@@ -182,7 +197,7 @@ export default function HomePage() {
             </section>
 
             {/* Cultural Stories */}
-            <section className="py-16 lg:py-24 bg-cream">
+            <section id="stories-section" className="py-16 lg:py-24 bg-cream">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -237,11 +252,51 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* About Section */}
-            <AboutSection />
+            {/* About Preview */}
+            <section id="about-section" className="py-16 lg:py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                        >
+                            <span className="inline-block px-4 py-1.5 bg-deep-green/10 text-deep-green text-sm font-semibold rounded-full mb-4">
+                                🌿 Our Values
+                            </span>
+                            <h2 className="font-heading text-3xl md:text-4xl font-bold text-earth-brown mb-6">
+                                Crafting a Future for Indian Heritage
+                            </h2>
+                            <p className="text-earth-brown/60 text-lg leading-relaxed mb-8">
+                                CraftConnect is on a mission to empower rural artisans by connecting them 
+                                directly with global markets through AI-driven storytelling and digital tools.
+                            </p>
+                            <Link
+                                to="/about"
+                                className="inline-flex items-center gap-2 px-8 py-3 bg-earth-brown text-white rounded-full font-semibold hover:bg-earth-brown-dark transition-all group"
+                            >
+                                Learn More About Us
+                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            className="relative rounded-[3rem] overflow-hidden shadow-2xl"
+                        >
+                            <img 
+                                src="https://images.unsplash.com/photo-1590732823619-3733075bf712?w=800&h=600&fit=crop" 
+                                alt="Artisan working" 
+                                className="w-full h-full object-cover"
+                            />
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
 
             {/* Craft Map of India */}
             <CraftMapIndia />
-        </div>
+        </motion.div>
     );
 }

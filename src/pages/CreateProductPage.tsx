@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Upload, Sparkles, Plus, X, Loader2, ChevronRight } from 'lucide-react';
 import { CRAFT_CATEGORIES } from '../utils/constants';
 import { generateProductDescription } from '../ai/productDescriptionGenerator';
+import AIPriceFairness from '../components/AIPriceFairness';
 
 export default function CreateProductPage() {
     const [name, setName] = useState('');
@@ -125,6 +126,9 @@ export default function CreateProductPage() {
                                     />
                                 </div>
                             </div>
+
+                            {/* AI Price Fairness Checker */}
+                            <AIPriceFairness category={category} price={price} materials={materials} />
 
                             {/* Materials */}
                             <div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, MapPin, ChevronRight } from 'lucide-react';
+import { Star, Heart, ShoppingCart, Truck, Shield, RotateCcw, MapPin, ChevronRight, Volume2 } from 'lucide-react';
 import { mockProducts, mockArtisans } from '../utils/mockData';
 import ProductCard from '../components/ProductCard';
 
@@ -20,8 +20,31 @@ export default function ProductPage() {
         (p) => p.category === product.category && p.id !== product.id
     );
 
+    const speakDescription = () => {
+        const synth = window.speechSynthesis;
+        if (synth.speaking) {
+            synth.cancel();
+            return;
+        }
+        
+        const utterance = new SpeechSynthesisUtterance(product.description);
+        // Try to find a good Hindi voice if description contains Devanagari, otherwise default
+        const voices = synth.getVoices();
+        const hindiVoice = voices.find(v => v.lang.startsWith('hi'));
+        if (hindiVoice) utterance.voice = hindiVoice;
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        synth.speak(utterance);
+    };
+
     return (
-        <div className="min-h-screen bg-cream pt-24 pb-16">
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="min-h-screen bg-cream pt-24 pb-16"
+        >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Breadcrumb */}
                 <nav className="flex items-center gap-2 text-sm text-earth-brown/50 mb-8">
@@ -69,9 +92,18 @@ export default function ProductPage() {
                         <span className="inline-block px-3 py-1 bg-terracotta/10 text-terracotta text-xs font-semibold rounded-full uppercase tracking-wide mb-3">
                             {product.category}
                         </span>
-                        <h1 className="font-heading text-2xl md:text-3xl font-bold text-earth-brown mb-3">
-                            {product.name}
-                        </h1>
+                        <div className="flex items-center justify-between gap-4 mb-3">
+                            <h1 className="font-heading text-2xl md:text-3xl font-bold text-earth-brown">
+                                {product.name}
+                            </h1>
+                            <button 
+                                onClick={speakDescription}
+                                className="flex items-center gap-2 px-3 py-1.5 bg-deep-green/10 text-deep-green rounded-full text-xs font-bold hover:bg-deep-green/20 transition-all border border-deep-green/10"
+                            >
+                                <Volume2 className="w-3.5 h-3.5" />
+                                Listen
+                            </button>
+                        </div>
 
                         <div className="flex items-center gap-3 mb-4">
                             <div className="flex items-center gap-1">
@@ -212,6 +244,6 @@ export default function ProductPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 }
